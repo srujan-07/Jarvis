@@ -23,97 +23,94 @@ Jarvis is a Python-based personal voice assistant with a cool graphical interfac
 ```bash
 git clone https://github.com/Arpitgarg07/Jarvis.git
 cd Jarvis
+```
 
+### 2. Create `config.py` File
 
-2. Create config.py File
-Inside the Jarvis/config directory, create a config.py file and add your credentials:
+Inside the `Jarvis/config` directory, create a `config.py` file and add your credentials:
 
-python
-Copy
-Edit
+```python
 email = "<your_email>"
 email_password = "<your_email_password>"
 wolframalpha_id = "<your_wolframalpha_id>"
-3. Setup Python Environment (Python 3.8 Recommended)
-bash
-Copy
-Edit
+```
+
+### 3. Setup Python Environment (Python 3.8 Recommended)
+
+```bash
 conda create -n jarvis python=3.8
 conda activate jarvis
 # OR
 python3.8 -m venv jarvis
 source jarvis/bin/activate  # On Windows use: jarvis\Scripts\activate
-4. Install Requirements
-bash
-Copy
-Edit
+```
+
+### 4. Install Requirements
+
+```bash
 pip install -r requirements.txt
-Note: You may need to install PyAudio manually on Windows. Download from here.
+```
 
-5. Get API Keys
-OpenWeatherMap
+> **Note:** You may need to install `PyAudio` manually on Windows. Download from [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio).
 
-WolframAlpha
+### 5. Get API Keys
 
-Google Calendar API
+- [OpenWeatherMap](https://openweathermap.org/api)
+- [WolframAlpha](https://developer.wolframalpha.com/)
+- [Google Calendar API](https://developers.google.com/calendar)
 
-Add these keys to your config.py.
+Add these keys to your `config.py`.
 
-6. Run the Assistant
-bash
-Copy
-Edit
+### 6. Run the Assistant
+
+```bash
 python main.py
-💡 Usage Examples
+```
+
+---
+
+## 💡 Usage Examples
+
 Once running, try voice commands like:
 
-“What’s the time?”
+- “What’s the time?”
+- “Open YouTube”
+- “Search Wikipedia for Python”
+- “Send email to Arpit”
+- “What’s the weather in Jaipur?”
+- “Play song on YouTube”
+- “Take screenshot named jarvis.png”
+- “Hide files in Documents”
 
-“Open YouTube”
+---
 
-“Search Wikipedia for Python”
+## 🤝 Contributing
 
-“Send email to Arpit”
-
-“What’s the weather in Jaipur?”
-
-“Play song on YouTube”
-
-“Take screenshot named jarvis.png”
-
-“Hide files in Documents”
-
-🤝 Contributing
 Contributions are welcome! Follow these steps:
 
-Fork the repository
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-name`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add feature'`)
+5. Push to the branch (`git push origin feature-name`)
+6. Create a Pull Request
 
-Create a new branch (git checkout -b feature-name)
+Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-Make your changes
+---
 
-Commit your changes (git commit -m 'Add feature')
+## 📄 License
 
-Push to the branch (git push origin feature-name)
+This project is licensed under the [MIT License](LICENSE).
 
-Create a Pull Request
+---
 
-Please read CONTRIBUTING.md and follow our Code of Conduct.
+## 🙌 Credits
 
-📄 License
-This project is licensed under the MIT License.
+- Developed by [Arpit Garg](https://github.com/Arpitgarg07)
+- Based on the original J.A.R.V.I.S. project by [Atharva Ingle (Gladiator07)](https://github.com/Gladiator07)
+- GUI and libraries credit to respective authors
 
-🙌 Credits
-Developed by Arpit Garg
-
-Based on the original J.A.R.V.I.S. project by Atharva Ingle (Gladiator07)
-
-GUI and libraries credit to respective authors
+---
 
 ⭐ If you like this project, consider starring the repo and sharing it!
-
-vbnet
-Copy
-Edit
-
-Let me know if you’d like to add badges (build, license, etc.), GIF demos, or screenshots!
