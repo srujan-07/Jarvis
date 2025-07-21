@@ -108,7 +108,6 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🙌 Credits
 
 - Developed by [Arpit Garg](https://github.com/Arpitgarg07)
-- Based on the original J.A.R.V.I.S. project by [Atharva Ingle (Gladiator07)](https://github.com/Gladiator07)
 - GUI and libraries credit to respective authors
 
 ---
