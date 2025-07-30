@@ -286,27 +286,27 @@ Jarvis implements a multi-layered architecture with security at its core:
 
 ---
 
-💡 Voice Commands: What Jarvis Can Do
-🎤 Basic Commands
+## 💡 Voice Commands: What Jarvis Can Do
+#### 🎤 Basic Commands
 
-"Wake up" , "Go to sleep" - Control Jarvis
-"Hello" ,"What's the time?" - Basic interaction
-"Google search [topic]" , "Wikipedia [topic]" - Web search
-"What's the news?" ,"What's my IP address?" - Information
+- "Wake up" , "Go to sleep" - Control Jarvis
+- "Hello" ,"What's the time?" - Basic interaction
+- "Google search [topic]" , "Wikipedia [topic]" - Web search
+- "What's the news?" ,"What's my IP address?" - Information
 
-🖥️ System & Productivity
+#### 🖥️ System & Productivity
 
-"Open [app]" , "Take screenshot" - System control
-"Set an alarm" , "Remind me" - Time management
-"Focus mode" , "Show my focus" - Productivity tracking
-"Battery status" , "Internet speed test" - System info
+- "Open [app]" , "Take screenshot" - System control
+- "Set an alarm" , "Remind me" - Time management
+- "Focus mode" , "Show my focus" - Productivity tracking
+- "Battery status" , "Internet speed test" - System info
 
-📧 Communication & Entertainment
+#### 📧 Communication & Entertainment
 
-"Write an email" , "WhatsApp message" - Communication
-"Play playlist" , "Tell me a joke" - Entertainment
-"Calculate [math]" , "Translate [text]" - Smart features
-"Open game" , "Flip a coin" - Interactive fun
+- "Write an email" , "WhatsApp message" - Communication
+- "Play playlist" , "Tell me a joke" - Entertainment
+- "Calculate [math]" , "Translate [text]" - Smart features
+- "Open game" , "Flip a coin" - Interactive fun
 
 ---
 
