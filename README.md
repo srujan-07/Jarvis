@@ -482,6 +482,6 @@ This project is freely available under the **MIT License**. See the [LICENSE](LI
 <div align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
   <p><strong>🤖 "Sometimes you gotta run before you can walk." - Tony Stark</strong></p>
-  <p>Built with ❤️ and Python. Secure AI assistance for everyone.</p>
+  <p>Built with ❤️ and Python by Arpit Garg. Secure AI assistance for everyone.</p>
   <img src="https://komarev.com/ghpvc/?username=Arpitgarg07-Jarvis&label=Project%20Views&color=00BFFF&style=flat" alt="Project views" />
 </div>
