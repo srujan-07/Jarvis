@@ -113,11 +113,11 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 ⭐ If you like this project, consider starring the repo and sharing it! -->
-<p align="center">
+<!-- <p align="center">
   <img src="https://github.com/Arpitgarg07/Jarvis/blob/main/docs/jarvis-logo.png" alt="Jarvis Logo" width="200"/>
-</p>
+</p> -->
 
-<h1 align="center">Jarvis - Just A Rather Very Intelligent System 🤖</h1>
+<h1 align="center">Jarvis - Just A Rather Very Intelligent Assistant 🤖</h1>
 
 <p align="center">
   <strong>An open-source Python-based personal voice assistant with face recognition security and intelligent automation capabilities.</strong>
@@ -289,24 +289,25 @@ Jarvis implements a multi-layered architecture with security at its core:
 💡 Voice Commands: What Jarvis Can Do
 🎤 Basic Commands
 
-"Wake up" / "Go to sleep" - Control Jarvis
-"Hello" / "What's the time?" - Basic interaction
-"Google search [topic]" / "Wikipedia [topic]" - Web search
-"What's the news?" / "What's my IP address?" - Information
+"Wake up" , "Go to sleep" - Control Jarvis
+"Hello" ,"What's the time?" - Basic interaction
+"Google search [topic]" , "Wikipedia [topic]" - Web search
+"What's the news?" ,"What's my IP address?" - Information
 
 🖥️ System & Productivity
 
-"Open [app]" / "Take screenshot" - System control
-"Set an alarm" / "Remind me" - Time management
-"Focus mode" / "Show my focus" - Productivity tracking
-"Battery status" / "Internet speed test" - System info
+"Open [app]" , "Take screenshot" - System control
+"Set an alarm" , "Remind me" - Time management
+"Focus mode" , "Show my focus" - Productivity tracking
+"Battery status" , "Internet speed test" - System info
 
 📧 Communication & Entertainment
 
-"Write an email" / "WhatsApp message" - Communication
-"Play playlist" / "Tell me a joke" - Entertainment
-"Calculate [math]" / "Translate [text]" - Smart features
-"Open game" / "Flip a coin" - Interactive fun
+"Write an email" , "WhatsApp message" - Communication
+"Play playlist" , "Tell me a joke" - Entertainment
+"Calculate [math]" , "Translate [text]" - Smart features
+"Open game" , "Flip a coin" - Interactive fun
+
 ---
 
 ## 🔧 Advanced Configuration
