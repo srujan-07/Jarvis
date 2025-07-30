@@ -1,3 +1,43 @@
+# # This workflow will install Python dependencies, run tests and lint with a single version of Python
+# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+# name: Python application
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# permissions:
+#   contents: read
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v4
+#     - name: Set up Python 3.10
+#       uses: actions/setup-python@v3
+#       with:
+#         python-version: "3.10"
+#     - name: Install dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install flake8 pytest
+#         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+#     - name: Lint with flake8
+#       run: |
+#         # stop the build if there are Python syntax errors or undefined names
+#         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+#         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+#         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+#     - name: Test with pytest
+#       run: |
+#         pytest
+
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
@@ -13,27 +53,122 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  # Job to detect what files changed
+  changes:
     runs-on: ubuntu-latest
-
+    outputs:
+      docs: ${{ steps.changes.outputs.docs }}
+      python: ${{ steps.changes.outputs.python }}
     steps:
     - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          docs:
+            - '**.md'
+            - '**.txt'
+            - 'docs/**'
+          python:
+            - '**.py'
+            - 'requirements.txt'
+            - '.github/workflows/**'
+
+  # Lint and test job - only runs if Python files changed
+  test:
+    needs: changes
+    if: ${{ needs.changes.outputs.python == 'true' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
+        
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install flake8 pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=venv,env,.venv,.env
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude=venv,env,.venv,.env
+        
+    - name: Check if tests exist
+      id: check_tests
       run: |
-        pytest
+        if find . -name "test_*.py" -o -name "*_test.py" | grep -q .; then
+          echo "tests_exist=true" >> $GITHUB_OUTPUT
+        else
+          echo "tests_exist=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Test with pytest
+      if: steps.check_tests.outputs.tests_exist == 'true'
+      run: |
+        pytest --cov=. --cov-report=xml --cov-report=term-missing
+        
+    - name: Skip tests notification
+      if: steps.check_tests.outputs.tests_exist == 'false'
+      run: |
+        echo "No test files found. Skipping pytest execution."
+        echo "Consider adding test files matching pattern: test_*.py or *_test.py"
+
+  # Documentation check job - only runs if docs changed
+  docs-check:
+    needs: changes
+    if: ${{ needs.changes.outputs.docs == 'true' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check documentation
+      run: |
+        echo "Documentation files changed. Running basic checks..."
+        
+        # Check if README.md exists and is not empty
+        if [[ -f "README.md" && -s "README.md" ]]; then
+          echo "✅ README.md exists and is not empty"
+        else
+          echo "❌ README.md is missing or empty"
+          exit 1
+        fi
+        
+        # Check for broken markdown links (basic check)
+        echo "Checking for basic markdown syntax..."
+        find . -name "*.md" -exec grep -l "]()" {} \; | while read file; do
+          echo "⚠️  Potential broken link found in: $file"
+        done
+        
+        echo "📚 Documentation check completed successfully!"
+
+  # Summary job that always runs
+  build-summary:
+    needs: [changes, test, docs-check]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Build Summary
+      run: |
+        echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Python files changed**: ${{ needs.changes.outputs.python }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Documentation files changed**: ${{ needs.changes.outputs.docs }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Test job result**: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Docs check result**: ${{ needs.docs-check.result }}" >> $GITHUB_STEP_SUMMARY
