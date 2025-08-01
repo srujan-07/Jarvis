@@ -1,0 +1,16 @@
+# Development dependencies for testing and code quality
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+black>=22.0.0
+isort>=5.10.0
+flake8>=5.0.0
+mypy>=1.0.0
+bandit>=1.7.0
+safety>=2.0.0
+pre-commit>=2.20.0
+
+# Optional: For more advanced testing
+pytest-xdist>=3.0.0  # For parallel test execution
+pytest-html>=3.1.0   # For HTML test reports
+coverage>=6.0.0      # Coverage analysis
