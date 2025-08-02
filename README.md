@@ -445,6 +445,58 @@ Jarvis/
 
 ---
 
+## 🧪 Testing & Quality Assurance
+
+Jarvis includes a comprehensive testing suite to ensure reliability and code quality.
+
+### 🚀 Quick Test Run
+```bash
+# Run all tests
+python -m pytest tests/ -v
+
+# Run tests with coverage
+python -m pytest tests/ --cov=. --cov-report=html
+```
+
+### 🔧 Comprehensive Testing
+```bash
+# Run all checks (tests, linting, formatting, security)
+python run_tests.py
+
+# Run specific test categories
+python run_tests.py --skip-lint
+python run_tests.py --skip-security
+python run_tests.py --fix  # Auto-fix formatting issues
+```
+
+### 📋 Test Categories
+
+- **Unit Tests:** Individual module functionality
+- **Integration Tests:** Module interaction and imports
+- **Code Quality:** Linting with flake8, formatting with Black
+- **Security Checks:** Vulnerability scanning with bandit
+- **Coverage Analysis:** Code coverage reporting
+
+### 🔄 Continuous Integration
+
+The project uses GitHub Actions for automated testing:
+- **Main CI Workflow:** Quick syntax and basic checks for all file changes
+- **Python Tests Workflow:** Comprehensive testing specifically for Python file changes
+- **Multi-Python Support:** Tests against Python 3.8, 3.9, 3.10, and 3.11
+
+### 📊 Development Dependencies
+```bash
+# Install development tools
+pip install -r requirements-dev.txt
+
+# Set up pre-commit hooks
+pre-commit install
+```
+
+For detailed testing documentation, see [tests/README.md](tests/README.md).
+
+---
+
 ## 🌟 Contributors
 
 Thanks to these amazing people who make Jarvis better:
