@@ -33,12 +33,15 @@ def TakeCommand():
 
 #! In latestnews we use in link after "=" sign our api key. 
 def latestnews():
-    api_dict = {"business" : "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=518914f375d14a61899bd1d83f52cf09",
-            "entertainment" : "https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=518914f375d14a61899bd1d83f52cf09",
-            "health" : "https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=518914f375d14a61899bd1d83f52cf09",
-            "science" :"https://newsapi.org/v2/top-headlines?country=in&category=science&apiKey=518914f375d14a61899bd1d83f52cf09",
-            "sports" :"https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=518914f375d14a61899bd1d83f52cf09",
-            "technology" :"https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=518914f375d14a61899bd1d83f52cf09"
+    # NewsAPI key configured
+    API_KEY = "0af0f013c3bb42ee97812d104e8a1bfc"
+    
+    api_dict = {"business" : f"https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey={API_KEY}",
+            "entertainment" : f"https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey={API_KEY}",
+            "health" : f"https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey={API_KEY}",
+            "science" : f"https://newsapi.org/v2/top-headlines?country=in&category=science&apiKey={API_KEY}",
+            "sports" : f"https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey={API_KEY}",
+            "technology" : f"https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey={API_KEY}"
 }
 
     content = None

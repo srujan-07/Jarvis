@@ -30,17 +30,21 @@ def send_email(sender_email, sender_password, recipient_email, subject, content)
 # ~Using Dictionary to map recipient names and their email ids.
 
 recipient_mapping = {
-    "name": "mail@example.com",
+    "friend": "friend@example.com",
+    "family": "family@example.com",
+    "boss": "boss@company.com",
     # Add more recipient mappings as needed.
+    # Format: "name_you_say": "actual_email@domain.com"
 }
 
 # & Fetch sender's email and password 
 # & Here you will add your email id and password which you want to use to send email to other recipients.
 # & You make sure that you can't use your original password for privacy concerns.
-# & You can use Google 'less secure apps' feature.
+# & You can use Google 'App Passwords' feature for Gmail (2-factor authentication required).
+# & Go to: Google Account Settings -> Security -> App passwords
 
-sender_email = "Your email id"
-sender_password = "your password"
+sender_email = "srujansamala92@gmail.com"  # Gmail address
+sender_password = "mxj6142f"  # Gmail App Password
 
 
 

@@ -60,23 +60,29 @@ is_paused = False
 
 #^ For taking all commands and listen the user voices.
 def TakeCommand():
-
     r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening...")
-        r.pause_threshold = 1       # Set the pause threshold to 1 second.
-        # r.energy_threshold = 200
-        audio = r.listen(source,0,4)        # Listen to the audio from the microphone, with optional timeout of 4 seconds.
-
     try:
+        with sr.Microphone() as source:
+            print("Listening...")
+            r.pause_threshold = 1       # Set the pause threshold to 1 second.
+            r.energy_threshold = 300    # Adjust energy threshold for better recognition
+            r.adjust_for_ambient_noise(source, duration=0.5)  # Adjust for background noise
+            audio = r.listen(source, timeout=3, phrase_time_limit=5)        # Listen to the audio from the microphone
+            
         print("Understanding...")    
         query = r.recognize_google(audio, language='en-in')     #* Recognize the speech using Google's speech recognition API.
         print(f"Master said: {query}\n")
+        return query
 
+    except sr.WaitTimeoutError:
+        print("Listening timeout...")
+        return "None"
+    except sr.UnknownValueError:
+        print("Say that again please...") 
+        return "None"
     except Exception as e:
         print("Say that again please...") 
         return "None"
-    return query        # Return the recognized speech as the output of the function.
 
 
 #? Dictionary to store contact information with names as keys and phone numbers as values.
@@ -104,12 +110,11 @@ coin_sound = pygame.mixer.Sound("coin.mp3")
 
 save_path = "Lock Screen photos\\lock."
 
-# Temporarily bypass face recognition for testing
-# TODO: Uncomment these lines after running Sample generator.py and Model Trainer.py
-# recognizer = cv2.face.LBPHFaceRecognizer_create() # Local Binary Patterns Histograms
-# recognizer.read('trainer\\trainer.yml')   #load trained model
-# cascadePath = "haarcascade_frontalface_default.xml"
-# faceCascade = cv2.CascadeClassifier(cascadePath) #initializing haar cascade for object detection approach
+# Face recognition setup - now enabled after training completion
+recognizer = cv2.face.LBPHFaceRecognizer_create() # Local Binary Patterns Histograms
+recognizer.read('trainer\\trainer.yml')   #load trained model
+cascadePath = "haarcascade_frontalface_default.xml"
+faceCascade = cv2.CascadeClassifier(cascadePath) #initializing haar cascade for object detection approach
 
 font = cv2.FONT_HERSHEY_SIMPLEX #denotes the font type
 
@@ -117,27 +122,23 @@ font = cv2.FONT_HERSHEY_SIMPLEX #denotes the font type
 id = 2 #number of persons you want to Recognize
 
 
-names = ['','arpit','raja']  #names, leave first empty bcz counter starts from 0
+names = ['','sruja','arpit','raja']  #names, leave first empty bcz counter starts from 0
 
-# Camera initialization commented out for testing
-# cam = cv2.VideoCapture(0, cv2.CAP_DSHOW) #cv2.CAP_DSHOW to remove warning
-# cam.set(3, 640) # set video FrameWidht
-# cam.set(4, 480) # set video FrameHeight
+# Camera initialization - now enabled
+cam = cv2.VideoCapture(0, cv2.CAP_DSHOW) #cv2.CAP_DSHOW to remove warning
+cam.set(3, 640) # set video FrameWidht
+cam.set(4, 480) # set video FrameHeight
 
 # Define min window size to be recognized as a face
-# minW = 0.1*cam.get(3)
-# minH = 0.1*cam.get(4)
+minW = 0.1*cam.get(3)
+minH = 0.1*cam.get(4)
 
-# flag = True
+flag = True
 
-# TEMPORARY BYPASS: Skip face recognition for testing
-# TODO: Remove this bypass after setting up face recognition
-print("Face recognition bypassed for testing - proceeding to voice assistant...")
-# Simulate successful authentication
-# Jump to the main assistant code after this while loop
+# Face recognition enabled - authenticate user
+print("Starting face recognition authentication...")
+print("Please look at the camera for authentication...")
 
-# Original face recognition code (commented out for testing):
-"""
 while True:
 
     ret, img =cam.read() #read the frames using the above created object
@@ -192,7 +193,7 @@ while True:
         print("try again")
         exit()
 
-    elif id == "arpit" or id == "name2":
+    elif id == "sruja" or id == "arpit" or id == "raja":
         time.sleep(1)
         screenshot = pyautogui.screenshot()
         save_path = r"Lock Screen photos"
@@ -211,34 +212,53 @@ while True:
         print("Your Face is not detected, Please come in bright area.")
         Speak("Your Face is not detected, Please come in bright area.")
         exit()
-"""
 
         
 # Do a bit of cleanup
 print("Face Recognization Succesfull")
 Speak("Face Recognization Succesfull")
-# cam.release()  # Commented out since we bypassed camera
-# cv2.destroyAllWindows()  # Commented out since we bypassed camera
+cam.release()  # Release camera
+cv2.destroyAllWindows()  # Close all OpenCV windows
+
+print("Welcome! Please say 'WAKE UP' to activate Jarvis...")
+Speak("Welcome! Please say WAKE UP to activate Jarvis.")
 
 
 ########################################################################################################^
 
-subprocess.Popen(["python", "intro.py"], shell=True)
+subprocess.Popen(["python", "INTRO.py"], shell=True)
 time.sleep(17) #!HERE YOU TYPE SECONDS THAT HAVE BEEN TAKEN TO COMPLETE GIF
 pyautogui.hotkey('Alt','f4')
 
 if __name__ == "__main__": 
 #! For Executing all tasks.
+    print("🤖 Jarvis is ready! Say 'WAKE UP' to begin...")
+    Speak("Jarvis is ready! Say WAKE UP to begin")
+    
     while True:
-        query = TakeCommand().lower()
+        query = TakeCommand()
+        
+        # Skip if no valid input
+        if query == "None" or query == "none":
+            continue
+            
+        query = query.lower()  # Convert to lowercase after None check
 
         #* To Wake up Jarvis.
-        if "wake up" in query or "start" in query or "makeup" in query or "breakup"in query:
+        if "wake up" in query or "start" in query or "makeup" in query or "breakup" in query:
             from GreetMe import greetMe
             greetMe()
+            print("🎤 Jarvis is now active! Listening for commands...")
+            
             #* We will use again while True to pause and play jarvis.
             while True:
-                query= TakeCommand().lower()
+                query = TakeCommand()
+                
+                # Skip if no valid input
+                if query == "None" or query == "none":
+                    continue
+                    
+                query = query.lower()  # Convert to lowercase after None check
 
                 # Set the path to the Chrome executable
                 # Which browser you want to use to execute you can use here.
@@ -274,48 +294,43 @@ if __name__ == "__main__":
                 ######################################################!
 
                 #^ Normal Conversation.
-                elif "hello" in query or "yo" in query or "hey there" in query or "hey" in query or "hi " in query or "hi" in query or "hello arvis" in query or "hi arpit" in query or "hlo" in query or "ram ram" in query or "good morning" in query:
-                    Speak("Hello sir, How are you!")
-                elif "i am fine" in query:
-                    Speak("Great! What about yourself?")
+                elif "hello" in query or "yo" in query or "hey there" in query or "hey" in query or "hi " in query or "hi" in query or "hello jarvis" in query or "hi arpit" in query or "hlo" in query or "ram ram" in query or "good morning" in query:
+                    Speak("Hello sir! How are you doing today?")
+                elif "i am fine" in query or "im fine" in query or "i'm fine" in query:
+                    Speak("Great! I'm glad to hear that. How may I assist you today?")
                 elif "how are you" in query or "how r you" in query or "how r u" in query:
-                    Speak("Perfect sir!")
-                elif 'namaste' in query or "ram ram" in query:
-                    Speak("ram ram, Master!")
+                    Speak("I'm functioning perfectly, sir! Ready to help you with anything.")
+                elif 'namaste' in query:
+                    Speak("Namaste, Master! How can I serve you today?")
                 elif "kaise ho" in query or "tum ho kaise" in query:
-                    Speak("I am good, thanks for asking!")
+                    Speak("Main bilkul theek hun, sir! Aap batayiye main aapki kya madad kar sakta hun?")
                 elif "Flip a coin" in query or "coin flip" in query or "toss a coin" in query or "toss" in query:
-                    outcome = random.choice(["head", "tail"])
-                    # Speak(random.choice(["head", "tail"]))
-
-                    if outcome == "head":
-                        coin_sound.play()
-                    else:
-                        coin_sound.play()
-                    print(f"The coin landed on {outcome}!")
+                    outcome = random.choice(["heads", "tails"])
+                    coin_sound.play()
+                    print(f"🪙 The coin landed on {outcome}!")
                     Speak(f"The coin landed on {outcome}!")
                 elif "thanks" in query or "thank" in query or "thank you" in query or "thanks bro" in query:
-                    Speak("My pleasure.")
-                elif "you are great" in query:
-                    Speak("Thank You!, for your compliment.")
+                    Speak("You're most welcome, sir! It's my pleasure to help you.")
+                elif "you are great" in query or "you're great" in query:
+                    Speak("Thank you for your kind words, sir! I'm here to serve you better.")
                 elif "Gm" in query or "good morning" in query or "morning" in query or "subhprabhat" in query:
-                    Speak("Good Morning Sir!")
+                    Speak("Good Morning, sir! Hope you have a wonderful day ahead!")
                 elif "good evening" in query or "evening" in query:
-                    Speak("Good Evening Sir!")
+                    Speak("Good Evening, sir! How was your day?")
                 elif "Good afternoon" in query or "noon" in query or "good afternoon" in query:
-                    Speak("Good Afternoon Sir!")
+                    Speak("Good Afternoon, sir! How can I make your day better?")
                 elif "feeling sleepy" in query or "good night" in query:
-                    Speak("Ok sir, if you want to close then speak [exit]")
+                    Speak("Good night, sir! Sweet dreams. You can call me anytime by saying 'wake up'.")
                 elif "hate" in query:
-                    Speak("I'm sorry you have been hurt.")
+                    Speak("I'm sorry to hear that, sir. Is there anything I can do to help you feel better?")
                 elif "you are lying" in query or "lie" in query:
-                    Speak("Please correct me if i am wrong!, if you can't do then go and correct yourself")
-                elif "tumhe kisne banaya" in query or "who made you" in query:
-                    Speak("The Great Mater Arpit Garg had made me!")
+                    Speak("I apologize if I provided incorrect information, sir. Please let me know how I can correct it.")
+                elif "tumhe kisne banaya" in query or "who made you" in query or "who created you" in query:
+                    Speak("I was created by the brilliant developer Arpit Garg, sir!")
                 elif "fine" in query:
-                    Speak("Great!, How may I assist?")
+                    Speak("Excellent! What can I help you with today?")
                 elif "good" in query:
-                    Speak("Thanks!. It's always nice talking with people who care about their health :) ")
+                    Speak("That's wonderful to hear, sir! Maintaining good health is important.")
 
                 #! By this Function be can know our battery percentage.
                 elif "battery" in query:
@@ -549,10 +564,12 @@ if __name__ == "__main__":
 
 
                 #* To Speak Current time.
-                elif 'time' in query:
-                    strTime = datetime.datetime.now().strftime("%H:%M:%S")    
-                    print(f"Sir, the time is {strTime}") 
-                    Speak(f"Sir, the time is {strTime}") 
+                elif 'time' in query or "what time is it" in query or "current time" in query:
+                    strTime = datetime.datetime.now().strftime("%H:%M")
+                    current_date = datetime.datetime.now().strftime("%A, %B %d, %Y")
+                    print(f"🕐 Current time: {strTime}")
+                    print(f"📅 Today is: {current_date}")
+                    Speak(f"Sir, the current time is {strTime}. Today is {current_date}.") 
 
                 #& For set an alarm.
                 elif "set an alarm" in query:
@@ -585,12 +602,20 @@ if __name__ == "__main__":
                     Speak(f"current{search} is {temp}")
 
                 #* To Calculate any digit.
-                elif "calculate" in query:
-                    from Calculatenumbers import WolfRamAlpha
-                    from Calculatenumbers import Calc
-                    query = query.replace("calculate","")
-                    query = query.replace("jarvis","")
-                    Calc(query)
+                elif "calculate" in query or "what is" in query or "solve" in query:
+                    calculation_query = query.replace("calculate","")
+                    calculation_query = calculation_query.replace("jarvis","")
+                    calculation_query = calculation_query.replace("what is","")
+                    calculation_query = calculation_query.replace("solve","")
+                    calculation_query = calculation_query.strip()
+                    
+                    if calculation_query:
+                        print(f"🧮 Processing calculation: {calculation_query}")
+                        Speak("Let me calculate that for you.")
+                        from Calculatenumbers import Calc
+                        Calc(calculation_query)
+                    else:
+                        Speak("Please tell me what you want me to calculate. For example, say 'calculate 2 plus 3'.")
      
                 #! For exit from Jarvis.
                 elif 'exit' in query:
@@ -653,31 +678,52 @@ if __name__ == "__main__":
                 
                 
                 #* send email Function.
-                if "write an email" in query:
+                elif "write an email" in query:
                     print("To whom do you want to send the email?")
                     Speak("To whom do you want to send the email?")
       
-                    recipient_name = TakeCommand().lower()
+                    recipient_name = TakeCommand()
+                    if recipient_name == "None" or recipient_name == "none":
+                        Speak("I didn't catch the recipient name. Please try again.")
+                        continue
+                        
+                    recipient_name = recipient_name.lower()
                     from sendemail import recipient_mapping
                     recipient_email = recipient_mapping.get(recipient_name)
           
                     if recipient_email:
                         print("What's the subject of the email?")
                         Speak("What's the subject of the email?")
-                        subject = TakeCommand().lower()
+                        subject = TakeCommand()
+                        if subject == "None" or subject == "none":
+                            Speak("I didn't catch the subject. Please try again.")
+                            continue
+                            
                         from sendemail import send_email
                         from sendemail import sender_email
                         from sendemail import sender_password
           
                         print("What's the content of the email?")
                         Speak("What's the content of the email?")
-                        content = TakeCommand().lower()
+                        content = TakeCommand()
+                        if content == "None" or content == "none":
+                            Speak("I didn't catch the content. Please try again.")
+                            continue
           
-                      
-                        send_email(sender_email, sender_password, recipient_email, subject, content)
+                        send_email(sender_email, sender_password, recipient_email, subject.lower(), content.lower())
                     else:
                         print("Sorry, the recipient's email address is not found.")
-                        Speak("Sorry, the recipient's email address is not found.")      
+                        Speak("Sorry, the recipient's email address is not found.")
+                
+                #! Fallback response for unrecognized commands
+                else:
+                    print(f"🤔 Command not recognized: {query}")
+                    helpful_responses = [
+                        "I didn't understand that command. Try saying 'hello', 'time', 'calculate', or 'news'.",
+                        "Sorry, I couldn't process that. You can ask me about time, calculations, news, or just say hello!",
+                        "I'm not sure what you meant. Try commands like 'what time is it' or 'calculate 5 plus 3'."
+                    ]
+                    Speak(random.choice(helpful_responses))      
 
 
 

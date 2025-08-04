@@ -1,6 +1,108 @@
-<!-- # Jarvis (Just A Rather Very Intelligent System)
+# Jarvis (Just A Rather Very Intelligent System)
 
-Jarvis is a Python-based personal voice assistant with a cool graphical interface. It listens for your voice commands and performs a variety of computer tasks — from searching the web to opening applications, sending emails, reporting weather, taking notes, and more.
+Jarvis is a Python-based personal voice assistant with a cool graphical interface. It listens for your voice commands an---
+
+## 💡 Voice Commands Examples
+
+Once running, try these voice commands:
+
+### Basic Commands:
+- "What's the time?"
+- "What's the date?"
+- "Hello Jarvis"
+
+### Web & Search:
+- "Open YouTube"
+- "Search Google for Python tutorials"
+- "Search Wikipedia for artificial intelligence"
+- "What's my IP address?"
+
+### Communication:
+- "Send email to [name]"
+- "Send WhatsApp message"
+
+### System Commands:
+- "Take screenshot"
+- "Check battery"
+- "System information"
+- "Open calculator"
+
+### Entertainment:
+- "Play song on YouTube"
+- "Tell me a joke"
+- "Play music"
+
+### Productivity:
+- "What's the weather?"
+- "Read news"
+- "Set reminder"
+- "Make calculation"
+
+---
+
+## 📁 Project Structure
+
+```
+Jarvis/
+├── Jarvismain.py           # Main application file
+├── installer.py           # Automatic dependency installer
+├── Sample generator.py    # Face sample generator
+├── Model Trainer.py       # Face recognition trainer
+├── requirements.txt       # Project dependencies
+├── requirements-dev.txt   # Development dependencies
+├── GreetMe.py             # Greeting functions
+├── Calculatenumbers.py    # WolframAlpha integration
+├── NewsRead.py            # News reading functionality
+├── sendemail.py           # Email functionality
+├── Whatsapp.py            # WhatsApp integration
+├── battery.py             # Battery status
+├── Location.py            # Location services
+├── reminder.py            # Reminder functionality
+├── alarm.py               # Alarm functionality
+├── joke.py                # Joke functionality
+├── Translator.py          # Translation services
+├── FocusMode.py           # Focus mode functionality
+├── game.py                # Mini games
+└── tests/                 # Test files
+    ├── test_greetme.py
+    ├── test_calculatenumbers.py
+    └── test_integration.py
+```
+
+---
+
+## 🔧 Configuration Files
+
+### API Configuration
+Update the following files with your API keys:
+
+**Calculatenumbers.py** (WolframAlpha):
+```python
+apikey = "YOUR_WOLFRAMALPHA_API_KEY"
+```
+
+**NewsRead.py** (News API):
+```python
+# Replace YOUR_NEWS_API_KEY in all URLs
+apiKey=YOUR_NEWS_API_KEY
+```
+
+**sendemail.py** (Email):
+```python
+sender_email = "your_email@gmail.com"
+sender_password = "your_app_password"
+```
+
+### Environment Variables (Alternative)
+You can also use environment variables:
+```bash
+set WOLFRAMALPHA_API_KEY=your_key
+set NEWS_API_KEY=your_key
+set EMAIL=your_email@gmail.com
+set EMAIL_PASSWORD=your_password
+```
+
+---iety of computer tasks — from searching the web to opening applications, sending emails, reporting weather, taking notes, and more.
 
 ## 🚀 Features
 
@@ -13,58 +115,178 @@ Jarvis is a Python-based personal voice assistant with a cool graphical interfac
 - 🖼️ **System Utilities:** Screenshots, hide/unhide files, switch windows
 - 📊 **System Info:** CPU, RAM, and battery status
 - 🖥️ **GUI Support:** Interactive interface for better user experience
+- 🔒 **Face Recognition Security:** Secure access with facial recognition
 
 ---
 
-## 🛠️ Installation & Setup
+## ⚡ Getting Started in Under 5 Minutes
 
-### 1. Clone the Repository
+### Prerequisites
+- **Python 3.8+**: [Download here](https://www.python.org/downloads/)
+- **Webcam**: Required for face recognition security
+- **Microphone**: For voice commands
+- **Internet Connection**: For API services
 
+### 🚀 One-Click Setup (Easiest)
+
+**Windows Users:**
+```bash
+# Double-click or run in Command Prompt
+setup_windows.bat
+```
+
+**Linux/Mac Users:**
+```bash
+chmod +x setup_unix.sh
+./setup_unix.sh
+```
+
+### Manual Installation & Setup
+
+#### 1. Clone the Repository:
 ```bash
 git clone https://github.com/Arpitgarg07/Jarvis.git
 cd Jarvis
 ```
 
-### 2. Create `config.py` File
-
-Inside the `Jarvis/config` directory, create a `config.py` file and add your credentials:
-
-```python
-email = "<your_email>"
-email_password = "<your_email_password>"
-wolframalpha_id = "<your_wolframalpha_id>"
-```
-
-### 3. Setup Python Environment (Python 3.8 Recommended)
-
+#### 2. Install Dependencies:
 ```bash
-conda create -n jarvis python=3.8
-conda activate jarvis
-# OR
-python3.8 -m venv jarvis
-source jarvis/bin/activate  # On Windows use: jarvis\Scripts\activate
-```
+# Option 1: Use the quick setup script (Recommended)
+python quick_setup.py
 
-### 4. Install Requirements
+# Option 2: Run the automatic installer
+python installer.py
 
-```bash
+# Option 3: Install manually
 pip install -r requirements.txt
 ```
+> **Note:** On Windows, you may need to install PyAudio manually from [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio).
 
-> **Note:** You may need to install `PyAudio` manually on Windows. Download from [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio).
+#### 3. Set Up Face Recognition (Security):
+```bash
+# Generate face samples (10 photos)
+python "Sample generator.py"
+
+# Train the recognition model
+python "Model Trainer.py"
+```
+
+#### 4. Configure API Keys:
+Update the following files with your credentials:
+
+**For WolframAlpha** (`Calculatenumbers.py`):
+```python
+apikey = "YOUR_WOLFRAMALPHA_API_KEY"
+```
+
+**For News** (`NewsRead.py`):
+```python
+# Replace the API key in the URLs
+apiKey=YOUR_NEWS_API_KEY
+```
+
+**For Email** (`sendemail.py`):
+```python
+sender_email = "your_email@gmail.com"
+sender_password = "your_app_password"
+```
+
+#### 5. 🎉 Launch Jarvis:
+```bash
+python Jarvismain.py
+```
+
+#### 6. Activate Your Assistant:
+Say **"Wake up"** to start interacting with Jarvis!
+
+---
+
+## 🔑 API Keys Setup
+
+### Get Your API Keys:
+- **[WolframAlpha](https://developer.wolframalpha.com/)** - For mathematical computations
+- **[NewsAPI](https://newsapi.org/)** - For news updates
+- **[OpenWeatherMap](https://openweathermap.org/api)** - For weather information
+
+### Email Setup:
+For Gmail, use an [App Password](https://support.google.com/accounts/answer/185833) instead of your regular password.
+
+---
+
+## 🛠️ Detailed Installation Guide
+
+### 1. Setup Python Environment (Recommended)
+```bash
+# Using conda
+conda create -n jarvis python=3.8
+conda activate jarvis
+
+# OR using venv
+python -m venv jarvis
+# Windows:
+jarvis\Scripts\activate
+# Linux/Mac:
+source jarvis/bin/activate
+```
+
+### 2. Manual Dependency Installation
+If the automatic installer doesn't work, install packages manually:
+```bash
+pip install pyttsx3 SpeechRecognition opencv-python requests pyautogui
+pip install speedtest-cli numpy beautifulsoup4 plyer nltk pygame
+pip install win10toast psutil wolframalpha wmi Pillow pyjokes
+pip install pynput googletrans gtts pywhatkit wikipedia twilio
+pip install playsound mouse pywikihow
+```
+
+### 3. Face Recognition Setup (Important!)
+The face recognition system provides security for your assistant:
+
+1. **Generate Face Samples:**
+   ```bash
+   python "Sample generator.py"
+   ```
+   - Enter a numeric user ID when prompted
+   - Look at the camera while 10 photos are taken
+   - Photos are saved in the `samples` folder
+
+2. **Train Recognition Model:**
+   ```bash
+   python "Model Trainer.py"
+   ```
+   - This creates a `trainer.yml` file with your face data
+
+### 4. Troubleshooting
+
+**PyAudio Issues on Windows:**
+```bash
+# Download PyAudio wheel file for your Python version from:
+# https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
+pip install PyAudio-0.2.11-cp38-cp38-win_amd64.whl
+```
+
+**OpenCV Issues:**
+```bash
+pip uninstall opencv-python
+pip install opencv-python-headless
+```
+
+**Permission Issues:**
+- Run terminal as Administrator on Windows
+- Use `sudo` on Linux/Mac if needed
 
 ### 5. Get API Keys
 
 - [OpenWeatherMap](https://openweathermap.org/api)
 - [WolframAlpha](https://developer.wolframalpha.com/)
-- [Google Calendar API](https://developers.google.com/calendar)
+- [NewsAPI](https://newsapi.org/)
 
-Add these keys to your `config.py`.
+Add these keys to your configuration files.
 
 ### 6. Run the Assistant
 
 ```bash
-python main.py
+python Jarvismain.py
 ```
 
 ---
